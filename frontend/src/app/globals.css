@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Base Warm Off-White (#F6F6F2) */
+    --background: 60 9% 96%;
+    /* Dark Slate Teal (#1C2A2B) */
+    --foreground: 184 21% 14%;
+
+    /* Crisp Card Surface (#FFFFFF) */
+    --card: 0 0% 100%;
+    --card-foreground: 184 21% 14%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 184 21% 14%;
+
+    /* Primary Deep Teal (#388087) */
+    --primary: 185 41% 37%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 185 41% 30%;
+
+    /* Secondary Soft Ocean Teal (#6FB3B8) */
+    --secondary: 184 37% 58%;
+    --secondary-foreground: 184 21% 14%;
+
+    /* Soft Ice Blue (#BADFE7) */
+    --accent: 191 52% 82%;
+    --accent-foreground: 184 21% 14%;
+
+    /* Muted (#EAF1F1) */
+    --muted: 180 14% 93%;
+    --muted-foreground: 186 10% 41%;
+
+    /* Success Mint (#C2EDCE) */
+    --success: 136 51% 85%;
+    --success-foreground: 136 55% 20%;
+
+    /* Warning Terracotta (#E59866) */
+    --warning: 24 72% 65%;
+    --warning-foreground: 24 70% 20%;
+
+    /* Destructive Soft Crimson (#D9534F) */
+    --destructive: 2 64% 58%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Border soft sage/teal tint (#D8E2DC) */
+    --border: 147 16% 87%;
+    --input: 147 16% 87%;
+    --ring: 185 41% 37%;
+
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased font-sans;
+  }
+  ::selection {
+    background-color: #BADFE7;
+    color: #1C2A2B;
+  }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+}
+
+/* Tabular nums for all currency and counts */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+.scrollbar-none {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Safe area bottom padding for iPhone home indicator */
+.safe-area-bottom {
+  padding-bottom: calc(0.5rem + env(safe-area-inset-bottom, 0px));
+}
