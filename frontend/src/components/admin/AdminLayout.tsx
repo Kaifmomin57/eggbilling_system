@@ -18,7 +18,6 @@ import {
   Package,
   ShieldAlert,
   Users2,
-  ArrowRight,
   Layers,
 } from "lucide-react";
 
@@ -33,7 +32,6 @@ export function AdminLayout() {
     customers,
     workers,
     eggTypes,
-    setActiveRole,
     adminTab: activeTab,
     setAdminTab: setActiveTab,
     setMobileMenuOpen,
@@ -90,7 +88,7 @@ export function AdminLayout() {
     },
     {
       id: "workers" as const,
-      label: "Workers",
+      label: t("workers"),
       icon: Users2,
       badge: activeWorkersCount > 0 ? `${activeWorkersCount}` : null,
       badgeVariant: "secondary" as const,
@@ -108,13 +106,13 @@ export function AdminLayout() {
             <div className="px-3 py-2 mb-3 border-b border-border/80 flex items-center justify-between">
               <div>
                 <span className="text-[10px] font-extrabold text-brand-teal uppercase tracking-widest block">
-                  Shop Control
+                  {t("shopControl")}
                 </span>
-                <h2 className="text-sm font-black text-brand-dark">Admin Console</h2>
+                <h2 className="text-sm font-black text-brand-dark">{t("adminConsole")}</h2>
               </div>
               <span className="flex items-center gap-1 text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                Live
+                {t("live")}
               </span>
             </div>
 
@@ -166,26 +164,14 @@ export function AdminLayout() {
             <div className="bg-brand-cream/70 rounded-xl p-2.5 border border-border/80 text-xs">
               <div className="flex items-center justify-between text-brand-muted mb-1">
                 <span className="text-[10px] font-bold uppercase tracking-wider flex items-center gap-1">
-                  <Layers className="h-3 w-3 text-brand-teal" /> Godown Stock
+                  <Layers className="h-3 w-3 text-brand-teal" /> {t("godownStock")}
                 </span>
-                <span className="text-[10px] text-emerald-700 font-bold">Active</span>
+                <span className="text-[10px] text-emerald-700 font-bold">{t("active")}</span>
               </div>
               <p className="font-black text-brand-dark text-sm tabular-nums">
-                {totalGodownTrays} Trays <span className="text-[11px] font-normal text-brand-muted">({(totalGodownTrays * 30).toLocaleString()} eggs)</span>
+                {totalGodownTrays} {t("traysUnit")} <span className="text-[11px] font-normal text-brand-muted">({(totalGodownTrays * 30).toLocaleString()} {t("eggs").toLowerCase()})</span>
               </p>
             </div>
-
-            {/* Quick Switch to Worker App Button */}
-            <button
-              onClick={() => setActiveRole("WORKER")}
-              className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl border border-brand-teal/30 bg-brand-ice/40 hover:bg-brand-ice text-brand-teal font-extrabold text-xs transition-colors"
-            >
-              <div className="flex items-center gap-2">
-                <Truck className="h-4 w-4" />
-                <span>Worker View Me Jayein</span>
-              </div>
-              <ArrowRight className="h-3.5 w-3.5" />
-            </button>
           </div>
         </div>
 
@@ -202,7 +188,7 @@ export function AdminLayout() {
                   </div>
                   <div>
                     <span className="text-[10px] font-bold text-brand-muted uppercase tracking-wider block">
-                      Admin Section
+                      {t("adminSection")}
                     </span>
                     <h2 className="text-sm font-black text-brand-dark flex items-center gap-2">
                       {current.label}
@@ -232,7 +218,7 @@ export function AdminLayout() {
             onClick={() => setMobileMenuOpen(true)}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-brand-cream border border-border text-xs font-black text-brand-dark active:scale-95 transition-transform"
           >
-            <span>Sections</span>
+            <span>{t("sections")}</span>
             <span className="text-[10px] bg-brand-teal text-white px-1.5 py-0.5 rounded-md font-bold">☰</span>
           </button>
         </div>

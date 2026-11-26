@@ -3,6 +3,8 @@
 
 import React, { useState } from "react";
 import { useStore } from "@/lib/store";
+import { useLanguage } from "@/lib/i18n";
+import { LanguageSelector } from "@/components/LanguageSelector";
 import { Egg, Truck, ShieldCheck, ArrowRight, Lock, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,6 +13,7 @@ import { toast } from "sonner";
 
 export function LoginScreen() {
   const { loginAsWorker, loginAsAdmin } = useStore();
+  const { t } = useLanguage();
   const [role, setRole] = useState<"WORKER" | "ADMIN">("WORKER");
   
   // Worker inputs
@@ -26,18 +29,18 @@ export function LoginScreen() {
   const handleWorkerLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!workerPhone.trim() || workerPhone.trim().length !== 10) {
-      toast.error("10-digit mobile number daalein");
+      toast.error(t("errPhone10"));
       return;
     }
     if (!workerPin.trim() || workerPin.trim().length < 4) {
-      toast.error("4-digit PIN daalein");
+      toast.error(t("errPin4"));
       return;
     }
 
     setLoading(true);
     try {
       await loginAsWorker(workerPhone.trim(), workerPin.trim());
-      toast.success("Welcome! Login Successful 🎉");
+      toast.success(`${t("loginSuccess")} 🎉`);
     } catch (err: any) {
       toast.error(err.message || "Login failed");
     } finally {
@@ -48,18 +51,18 @@ export function LoginScreen() {
   const handleAdminLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!adminPhone.trim()) {
-      toast.error("Admin Phone / Username daalein");
+      toast.error(t("errAdminPhone"));
       return;
     }
     if (!adminPassword.trim()) {
-      toast.error("Admin Password daalein");
+      toast.error(t("errAdminPass"));
       return;
     }
 
     setLoading(true);
     try {
       await loginAsAdmin(adminPhone.trim(), adminPassword.trim());
-      toast.success("Admin Dashboard me swagat hai! 🛡️");
+      toast.success(`${t("adminLoginSuccess")} 🛡️`);
     } catch (err: any) {
       toast.error(err.message || "Admin login failed");
     } finally {
@@ -68,17 +71,22 @@ export function LoginScreen() {
   };
 
   return (
-    <div className="min-h-screen bg-brand-cream flex flex-col justify-center items-center px-4 py-8">
+    <div className="min-h-screen bg-brand-cream flex flex-col justify-center items-center px-4 py-8 relative">
+      {/* Language Switcher Top-Right */}
+      <div className="absolute top-4 right-4">
+        <LanguageSelector />
+      </div>
+
       {/* Brand Header */}
       <div className="flex flex-col items-center mb-6 text-center">
         <div className="flex h-16 w-16 items-center justify-center rounded-3xl bg-brand-teal text-white shadow-lg mb-3">
           <Egg className="h-10 w-10 fill-brand-mint text-white" />
         </div>
         <h1 className="text-2xl font-black text-brand-dark tracking-tight">
-          Egg Billing System
+          {t("appName")}
         </h1>
         <p className="text-xs text-brand-muted mt-1">
-          Hisaab, Billing & Stock Management
+          {t("loginSubtitle")}
         </p>
       </div>
 
@@ -95,7 +103,7 @@ export function LoginScreen() {
             }`}
           >
             <Truck className="h-4 w-4" />
-            <span>Delivery Worker</span>
+            <span>{t("deliveryWorker")}</span>
           </button>
 
           <button
@@ -108,7 +116,7 @@ export function LoginScreen() {
             }`}
           >
             <ShieldCheck className="h-4 w-4" />
-            <span>Shop Admin</span>
+            <span>{t("shopAdmin")}</span>
           </button>
         </div>
 
@@ -117,7 +125,7 @@ export function LoginScreen() {
           <form onSubmit={handleWorkerLogin} className="space-y-4">
             <div>
               <span className="text-[11px] font-bold text-brand-muted uppercase tracking-wider block mb-1">
-                Registered Mobile Number
+                {t("registeredMobile")}
               </span>
               <div className="relative">
                 <Phone className="absolute left-3.5 top-3.5 h-4 w-4 text-brand-muted" />
@@ -134,7 +142,7 @@ export function LoginScreen() {
 
             <div>
               <span className="text-[11px] font-bold text-brand-muted uppercase tracking-wider block mb-1">
-                Secret PIN (4–6 Digits)
+                {t("secretPin")}
               </span>
               <div className="relative">
                 <Lock className="absolute left-3.5 top-3.5 h-4 w-4 text-brand-muted" />
@@ -153,13 +161,13 @@ export function LoginScreen() {
               disabled={loading}
               className="w-full h-12 rounded-xl text-sm font-bold bg-brand-teal hover:bg-brand-teal/90 text-white shadow-md flex items-center justify-center gap-2"
             >
-              <span>{loading ? "Logging in..." : "Worker Login"}</span>
+              <span>{loading ? t("loggingIn") : t("workerLogin")}</span>
               <ArrowRight className="h-4 w-4" />
             </Button>
 
             {/* Quick Demo Fill */}
             <div className="pt-2 text-center">
-              <p className="text-[11px] text-brand-muted mb-1.5">Quick Demo Login:</p>
+              <p className="text-[11px] text-brand-muted mb-1.5">{t("quickDemoLogin")}</p>
               <button
                 type="button"
                 onClick={() => {
@@ -179,7 +187,7 @@ export function LoginScreen() {
           <form onSubmit={handleAdminLogin} className="space-y-4">
             <div>
               <span className="text-[11px] font-bold text-brand-muted uppercase tracking-wider block mb-1">
-                Admin Mobile / Username
+                {t("adminMobileUser")}
               </span>
               <div className="relative">
                 <Phone className="absolute left-3.5 top-3.5 h-4 w-4 text-brand-muted" />
@@ -196,7 +204,7 @@ export function LoginScreen() {
 
             <div>
               <span className="text-[11px] font-bold text-brand-muted uppercase tracking-wider block mb-1">
-                Admin Password / PIN
+                {t("adminPasswordPin")}
               </span>
               <div className="relative">
                 <Lock className="absolute left-3.5 top-3.5 h-4 w-4 text-brand-muted" />
@@ -215,13 +223,13 @@ export function LoginScreen() {
               disabled={loading}
               className="w-full h-12 rounded-xl text-sm font-bold bg-brand-teal hover:bg-brand-teal/90 text-white shadow-md flex items-center justify-center gap-2"
             >
-              <span>{loading ? "Authenticating..." : "Admin Dashboard Login"}</span>
+              <span>{loading ? t("authenticating") : t("adminLoginBtn")}</span>
               <ArrowRight className="h-4 w-4" />
             </Button>
 
             {/* Quick Demo Fill */}
             <div className="pt-2 text-center">
-              <p className="text-[11px] text-brand-muted mb-1.5">Default Admin Credentials:</p>
+              <p className="text-[11px] text-brand-muted mb-1.5">{t("defaultAdminCreds")}</p>
               <button
                 type="button"
                 onClick={() => {

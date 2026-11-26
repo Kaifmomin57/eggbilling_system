@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useStore } from "@/lib/store";
+import { useLanguage } from "@/lib/i18n";
 import { formatINR, formatEggsAndTrays } from "@/lib/utils";
 import { Stepper } from "@/components/ui/stepper";
 import { Button } from "@/components/ui/button";
@@ -13,6 +14,7 @@ import { ClipboardCheck, Plus } from "lucide-react";
 
 export function WorkerCount() {
   const { trip, eggTypes, submitTripSettlement, addDamage } = useStore();
+  const { t } = useLanguage();
 
   // Evening Closing Form
   const [emptyTraysReturned, setEmptyTraysReturned] = useState(25);
@@ -33,8 +35,8 @@ export function WorkerCount() {
 
   const handleSubmit = () => {
     submitTripSettlement(declaredCash, trip.expectedOnline, emptyTraysReturned);
-    toast.success("Closing Settlement Submitted!", {
-      description: "Admin will review and close the trip.",
+    toast.success(t("settlementSubmitted"), {
+      description: t("settlementDesc"),
     });
   };
 
@@ -62,7 +64,7 @@ export function WorkerCount() {
         <div>
           <h1 className="text-xl sm:text-2xl font-extrabold text-brand-dark flex items-center gap-2">
             <ClipboardCheck className="h-6 w-6 text-brand-teal" />
-            <span>Evening Closing (Hisaab)</span>
+            <span>{t("eveningClosing")}</span>
           </h1>
           <p className="text-xs sm:text-sm text-brand-muted">
             Trip #{trip.tripNo} · {trip.date}
@@ -77,7 +79,7 @@ export function WorkerCount() {
         {/* Stock Reconciliation Summary */}
         <Card className="p-4 sm:p-5 bg-white border border-border">
           <h3 className="text-sm sm:text-base font-bold text-brand-dark mb-3">
-            Vehicle Egg Stock Check
+            {t("vehicleStockCheck")}
           </h3>
           <div className="space-y-3">
             {trip.loads.map((load, idx) => {
@@ -107,18 +109,18 @@ export function WorkerCount() {
         <Card className="p-4 sm:p-5 bg-white border border-border space-y-4 flex flex-col justify-between">
           <div>
             <h3 className="text-sm sm:text-base font-bold text-brand-dark mb-3">
-              Cash & UPI Jama Hisaab
+              {t("cashUpiHisaab")}
             </h3>
 
             {/* Expected vs Declared Cash */}
             <div className="space-y-1.5">
               <div className="flex justify-between text-xs">
-                <span className="text-brand-muted">System Expected Cash:</span>
+                <span className="text-brand-muted">{t("expectedCash")}</span>
                 <strong className="text-brand-dark">{formatINR(trip.expectedCash)}</strong>
               </div>
               <div>
                 <label className="text-xs font-semibold text-brand-muted block mb-1">
-                  Bag me Actual Cash Kitna Hai (₹):
+                  {t("actualCashLabel")}
                 </label>
                 <Input
                   type="number"
@@ -144,7 +146,7 @@ export function WorkerCount() {
           {/* Trays Returned */}
           <div className="pt-3 border-t border-border">
             <Stepper
-              label="Khali Trays Godown Wapas Laye"
+              label={t("emptyTraysReturned")}
               value={emptyTraysReturned}
               min={0}
               onChange={setEmptyTraysReturned}
@@ -162,7 +164,7 @@ export function WorkerCount() {
           className="flex-1 h-12 border-brand-ocean/40 text-brand-dark hover:bg-brand-ice/20 font-bold rounded-xl"
         >
           <Plus className="h-4 w-4 mr-1 text-brand-teal" />
-          <span>+ Toota / Damage Anda Add Karein</span>
+          <span>{t("addDamageBtn")}</span>
         </Button>
 
         {/* Submit Settlement Button */}
@@ -170,7 +172,7 @@ export function WorkerCount() {
           onClick={handleSubmit}
           className="flex-1 h-12 rounded-xl bg-brand-teal text-white font-extrabold shadow-md min-h-[48px]"
         >
-          <span>Hisaab Jama Karein (Submit Settlement)</span>
+          <span>{t("submitSettlementBtn")}</span>
         </Button>
       </div>
     </div>

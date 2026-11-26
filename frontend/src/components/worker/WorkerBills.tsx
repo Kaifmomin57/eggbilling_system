@@ -44,7 +44,7 @@ export function WorkerBills() {
         <div className="relative flex-1">
           <Search className="absolute left-3.5 top-3.5 h-4 w-4 text-brand-muted" />
           <Input
-            placeholder="Search by customer or bill no..."
+            placeholder={t("searchBillsPlaceholder")}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="pl-10 h-11 rounded-xl"
@@ -63,7 +63,7 @@ export function WorkerBills() {
                   : "text-brand-muted hover:text-brand-dark hover:bg-white"
               }`}
             >
-              {mode === "ALL" ? "Sabhi (All)" : mode === "PAID" ? "Poora Paid" : "Udhaar (Due)"}
+              {mode === "ALL" ? t("filterAll") : mode === "PAID" ? t("filterPaid") : t("filterDue")}
             </button>
           ))}
         </div>
@@ -74,8 +74,8 @@ export function WorkerBills() {
         {filteredBills.length === 0 ? (
           <div className="text-center py-16 bg-white rounded-2xl border border-dashed border-border">
             <Receipt className="h-10 w-10 text-brand-muted mx-auto mb-2 opacity-50" />
-            <p className="text-sm font-bold text-brand-dark">Koi bill nahi mila</p>
-            <p className="text-xs text-brand-muted">Search criteria change karein</p>
+            <p className="text-sm font-bold text-brand-dark">{t("noBillsFound")}</p>
+            <p className="text-xs text-brand-muted">{t("changeSearchCriteria")}</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">

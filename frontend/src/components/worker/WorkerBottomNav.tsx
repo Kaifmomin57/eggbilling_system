@@ -70,7 +70,7 @@ export function WorkerBottomNav({ activeTab, setActiveTab }: WorkerBottomNavProp
           }`}
         >
           <Truck className={`h-5 w-5 transition-transform ${activeTab === "trips" ? "scale-110" : ""}`} />
-          <span className="text-[10px] mt-0.5 tracking-tight font-bold">Trips</span>
+          <span className="text-[10px] mt-0.5 tracking-tight font-bold">{t("trips")}</span>
         </button>
 
         {/* 5. Closing Count */}
@@ -83,7 +83,7 @@ export function WorkerBottomNav({ activeTab, setActiveTab }: WorkerBottomNavProp
           }`}
         >
           <ClipboardCheck className={`h-5 w-5 transition-transform ${activeTab === "count" ? "scale-110" : ""}`} />
-          <span className="text-[10px] mt-0.5 tracking-tight font-bold">Hisaab</span>
+          <span className="text-[10px] mt-0.5 tracking-tight font-bold">{t("hisaabShort")}</span>
         </button>
       </div>
     </nav>

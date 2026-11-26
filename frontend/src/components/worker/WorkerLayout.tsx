@@ -17,10 +17,10 @@ export function WorkerLayout() {
 
   const navItems = [
     { id: "home" as const, label: t("dashboard"), icon: Home },
-    { id: "new-bill" as const, label: `+ ${t("newBill")}`, icon: PlusCircle, isPrimary: true },
+    { id: "new-bill" as const, label: t("newBill"), icon: PlusCircle, isPrimary: true },
     { id: "bills" as const, label: t("bills"), icon: Receipt },
-    { id: "trips" as const, label: "Meri Trips", icon: Truck },
-    { id: "count" as const, label: "Hisaab / Closing", icon: ClipboardCheck },
+    { id: "trips" as const, label: t("myTrips"), icon: Truck },
+    { id: "count" as const, label: t("hisaabClosing"), icon: ClipboardCheck },
   ];
 
   return (
@@ -61,7 +61,7 @@ export function WorkerLayout() {
             }`}
           >
             <PlusCircle className="h-4 w-4 stroke-[2.5]" />
-            <span>+ Naya Bill Banayein</span>
+            <span>{t("newBillFull")}</span>
           </button>
         </div>
 

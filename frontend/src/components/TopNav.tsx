@@ -21,7 +21,6 @@ import {
   Receipt,
   ClipboardCheck,
   PlusCircle,
-  ArrowRight,
   Globe,
   Layers,
   ChevronRight,
@@ -38,7 +37,6 @@ export function TopNav() {
     workers,
     eggTypes,
     activeRole,
-    setActiveRole,
     adminTab,
     setAdminTab,
     workerTab,
@@ -85,7 +83,7 @@ export function TopNav() {
     },
     {
       id: "rates" as const,
-      label: "Rates & Products",
+      label: t("ratesAndProducts"),
       icon: Tag,
       badge: eggTypes.length > 0 ? `${eggTypes.length}` : null,
       badgeColor: "bg-brand-ice text-brand-teal",
@@ -106,7 +104,7 @@ export function TopNav() {
     },
     {
       id: "workers" as const,
-      label: "Workers",
+      label: t("workers"),
       icon: Users2,
       badge: activeWorkersCount > 0 ? `${activeWorkersCount}` : null,
       badgeColor: "bg-brand-ice text-brand-teal",
@@ -115,16 +113,16 @@ export function TopNav() {
 
   const workerNavItems = [
     { id: "home" as const, label: t("dashboard"), icon: LayoutDashboard },
-    { id: "new-bill" as const, label: `+ ${t("newBill")}`, icon: PlusCircle, isPrimary: true },
+    { id: "new-bill" as const, label: t("newBill"), icon: PlusCircle, isPrimary: true },
     { id: "bills" as const, label: t("bills"), icon: Receipt },
     {
       id: "trips" as const,
-      label: "Meri Trips",
+      label: t("myTrips"),
       icon: Truck,
-      badge: trip.status === "OUT" ? "Live" : null,
+      badge: trip.status === "OUT" ? t("live") : null,
       badgeColor: "bg-emerald-100 text-emerald-800",
     },
-    { id: "count" as const, label: "Hisaab / Closing", icon: ClipboardCheck },
+    { id: "count" as const, label: t("hisaabClosing"), icon: ClipboardCheck },
   ];
 
   const languages: { id: Language; label: string }[] = [
@@ -221,18 +219,6 @@ export function TopNav() {
               </div>
             )}
 
-            {/* Quick Admin/Worker View Switch for Shop Admin */}
-            {currentUser?.role === "ADMIN" && (
-              <button
-                onClick={() => setActiveRole(activeRole === "ADMIN" ? "WORKER" : "ADMIN")}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-brand-teal/30 bg-brand-ice/40 text-xs font-bold text-brand-teal hover:bg-brand-ice transition-colors"
-              >
-                <span>
-                  {activeRole === "ADMIN" ? "Switch to Worker View" : "Back to Admin Dashboard"}
-                </span>
-              </button>
-            )}
-
             <LanguageSelector />
 
             {/* Logout Button */}
@@ -312,32 +298,13 @@ export function TopNav() {
                       </div>
                     </div>
                   </div>
-
-                  {/* Role Switcher Button for Admin */}
-                  {currentUser.role === "ADMIN" && (
-                    <button
-                      onClick={() => {
-                        setActiveRole(activeRole === "ADMIN" ? "WORKER" : "ADMIN");
-                        setMobileMenuOpen(false);
-                      }}
-                      className="mt-3 w-full flex items-center justify-between px-3 py-2 rounded-xl bg-brand-ice/50 hover:bg-brand-ice border border-brand-teal/30 text-brand-teal font-extrabold text-xs transition-colors"
-                    >
-                      <div className="flex items-center gap-2">
-                        <Truck className="h-4 w-4" />
-                        <span>
-                          {activeRole === "ADMIN" ? "Switch to Worker View" : "Back to Admin Dashboard"}
-                        </span>
-                      </div>
-                      <ArrowRight className="h-3.5 w-3.5" />
-                    </button>
-                  )}
                 </div>
               )}
 
               {/* 2. Navigation Menu */}
               <div className="p-3">
                 <p className="px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-widest text-brand-muted">
-                  {activeRole === "ADMIN" ? "Admin Sections" : "Worker Menu"}
+                  {activeRole === "ADMIN" ? t("adminSections") : t("workerMenu")}
                 </p>
 
                 {/* Admin Navigation Links */}
@@ -430,14 +397,14 @@ export function TopNav() {
                   <div className="mt-4 p-3 rounded-xl bg-brand-cream/70 border border-border/80">
                     <div className="flex items-center justify-between text-brand-muted mb-1">
                       <span className="text-[10px] font-bold uppercase tracking-wider flex items-center gap-1">
-                        <Layers className="h-3 w-3 text-brand-teal" /> Godown Stock
+                        <Layers className="h-3 w-3 text-brand-teal" /> {t("godownStock")}
                       </span>
-                      <span className="text-[10px] text-emerald-700 font-bold">Active</span>
+                      <span className="text-[10px] text-emerald-700 font-bold">{t("active")}</span>
                     </div>
                     <p className="font-black text-brand-dark text-sm">
-                      {totalGodownTrays} Trays{" "}
+                      {totalGodownTrays} {t("traysUnit")}{" "}
                       <span className="text-[11px] font-normal text-brand-muted">
-                        ({(totalGodownTrays * 30).toLocaleString()} eggs)
+                        ({(totalGodownTrays * 30).toLocaleString()} {t("eggs").toLowerCase()})
                       </span>
                     </p>
                   </div>
@@ -450,7 +417,7 @@ export function TopNav() {
               {/* Language selection pills */}
               <div>
                 <p className="text-[10px] font-bold text-brand-muted uppercase tracking-wider mb-1.5 flex items-center gap-1">
-                  <Globe className="h-3 w-3 text-brand-teal" /> Bhasha / Language
+                  <Globe className="h-3 w-3 text-brand-teal" /> {t("languageLabel")}
                 </p>
                 <div className="grid grid-cols-2 gap-1.5">
                   {languages.map((opt) => (
@@ -479,7 +446,7 @@ export function TopNav() {
                   className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl border border-red-200 bg-red-50 text-red-700 font-bold text-xs hover:bg-red-100 transition-colors"
                 >
                   <LogOut className="h-4 w-4" />
-                  <span>Logout Karein</span>
+                  <span>{t("logoutBtn")}</span>
                 </button>
               )}
             </div>

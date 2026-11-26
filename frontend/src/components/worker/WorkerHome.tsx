@@ -25,7 +25,7 @@ interface WorkerHomeProps {
 }
 
 export function WorkerHome({ onStartNewBill, onViewAllBills }: WorkerHomeProps) {
-  const { trip, bills, confirmTripLoad, currentUser, setActiveRole } = useStore();
+  const { trip, bills, confirmTripLoad, currentUser } = useStore();
   const { t } = useLanguage();
 
   const isTripAssigned = Boolean(trip && trip.id);
@@ -53,7 +53,7 @@ export function WorkerHome({ onStartNewBill, onViewAllBills }: WorkerHomeProps) 
       <div className="flex items-center justify-between px-1">
         <div>
           <span className="text-xs font-semibold text-brand-muted">
-            Namaste, {workerDisplayName} 🙏
+            {t("hello")}, {workerDisplayName} 🙏
           </span>
           <h1 className="text-xl sm:text-2xl font-extrabold text-brand-dark">
             {t("todayTrip")}
@@ -77,7 +77,7 @@ export function WorkerHome({ onStartNewBill, onViewAllBills }: WorkerHomeProps) 
           </Badge>
         ) : (
           <Badge variant="outline" className="text-brand-muted text-xs">
-            No Trip Assigned
+            {t("noTripAssigned")}
           </Badge>
         )}
       </div>
@@ -112,9 +112,9 @@ export function WorkerHome({ onStartNewBill, onViewAllBills }: WorkerHomeProps) 
           <div className="pt-4 space-y-3">
             <div className="flex justify-between items-end">
               <div>
-                <span className="text-xs text-brand-muted font-medium">Bikri Progress:</span>
+                <span className="text-xs text-brand-muted font-medium">{t("salesProgress")}</span>
                 <p className="text-sm sm:text-base font-bold text-brand-dark">
-                  {percentSold}% eggs sold today
+                  {percentSold}% {t("eggsSoldToday")}
                 </p>
               </div>
               <span className="text-xs sm:text-sm font-bold text-brand-teal tabular-nums">
@@ -159,22 +159,12 @@ export function WorkerHome({ onStartNewBill, onViewAllBills }: WorkerHomeProps) 
           </div>
           <div>
             <h3 className="font-extrabold text-brand-dark text-base">
-              Koi Delivery Trip Assign Nahi Hai
+              {t("noTripTitle")}
             </h3>
             <p className="text-xs sm:text-sm text-brand-muted mt-1 max-w-md mx-auto leading-relaxed">
-              Abhi godown se koi delivery gaadi load nahi hui hai. Admin jab gaadi load karke trip dispatch karega, tab yahan stock aur billing available hoga.
+              {t("noTripDesc")}
             </p>
           </div>
-          {currentUser?.role === "ADMIN" && (
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={() => setActiveRole("ADMIN")}
-              className="text-xs font-bold mt-2"
-            >
-              Go to Admin Dashboard
-            </Button>
-          )}
         </Card>
       )}
 
