@@ -8,18 +8,26 @@ SCHEMA_NAME = "eggbill"
 def _build_engine():
     db_url = settings.DATABASE_URL
 
-    # Supabase / Render give a postgres:// URL — SQLAlchemy needs postgresql://
+    # Supabase / Render give postgres:// or postgresql:// — SQLAlchemy 2.1+ defaults
+    # postgresql:// to psycopg (v3), while we ship psycopg2-binary.
     if db_url.startswith("postgres://"):
-        db_url = db_url.replace("postgres://", "postgresql://", 1)
+        db_url = db_url.replace("postgres://", "postgresql+psycopg2://", 1)
+    elif db_url.startswith("postgresql://"):
+        db_url = db_url.replace("postgresql://", "postgresql+psycopg2://", 1)
 
     if db_url.startswith("sqlite"):
         connect_args = {"check_same_thread": False}
         return create_engine(db_url, connect_args=connect_args, echo=False)
 
+    # Supabase Transaction Pooler (port 6543) rejects startup `options` parameter;
+    # MetaData(schema=SCHEMA_NAME) already schema-qualifies all tables.
+    is_pooler = "pooler.supabase.com" in db_url or ":6543/" in db_url
+    pg_connect_args = {} if is_pooler else {"options": f"-c search_path={SCHEMA_NAME},public"}
+
     # PostgreSQL — use connection pooling params safe for Render free tier
     engine = create_engine(
         db_url,
-        connect_args={"options": f"-c search_path={SCHEMA_NAME},public"},
+        connect_args=pg_connect_args,
         pool_pre_ping=True,       # auto-reconnect on stale connections
         pool_size=5,
         max_overflow=10,
