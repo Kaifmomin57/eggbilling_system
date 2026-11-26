@@ -18,10 +18,11 @@ app = FastAPI(
     openapi_url=f"{settings.API_V1_STR}/openapi.json" if settings.ENABLE_DOCS else None,
 )
 
-# Restrict CORS to explicit allowed origins
+# Restrict CORS to explicit allowed origins + this project's Vercel preview/prod domains
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_origins,
+    allow_origin_regex=r"^https://(frontend|eggbilling-system)(-[a-z0-9-]+)*\.vercel\.app$",
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["Authorization", "Content-Type"],

@@ -1,9 +1,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api/v1";
+const DEFAULT_PROD_API_URL = "https://eggbilling-system.onrender.com/api/v1";
+
+function getApiBaseUrl(): string {
+  const envUrl = process.env.NEXT_PUBLIC_API_URL?.trim();
+  if (envUrl) {
+    const clean = envUrl.replace(/\/+$/, "");
+    return clean.endsWith("/api/v1") ? clean : `${clean}/api/v1`;
+  }
+  if (typeof window !== "undefined") {
+    const host = window.location.hostname;
+    if (host !== "localhost" && host !== "127.0.0.1") {
+      return DEFAULT_PROD_API_URL;
+    }
+  }
+  return "http://localhost:8000/api/v1";
+}
 
 async function request<T>(endpoint: string, options?: RequestInit): Promise<T> {
   const token = typeof window !== "undefined" ? localStorage.getItem("eggbill_token") : null;
-  const url = `${API_BASE_URL}${endpoint}`;
+  const url = `${getApiBaseUrl()}${endpoint}`;
   
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
