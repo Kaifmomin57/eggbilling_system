@@ -18,13 +18,15 @@ export function WorkerCount() {
   const [emptyTraysReturned, setEmptyTraysReturned] = useState(25);
   const [declaredCash, setDeclaredCash] = useState<number>(trip.expectedCash);
 
-  // Damage reporting mini-form
+  // Damage reporting mini-form (modal UI pending — state kept for future)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [showDamageModal, setShowDamageModal] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [damageEggType, setDamageEggType] = useState(eggTypes[0]?.name || "White Table Egg");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [damageQty, setDamageQty] = useState(6);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [damageCategory, setDamageCategory] = useState<"HIGH" | "LOW">("LOW");
-  // suppress lint — these are used by handleAddDamage which fires via modal
-  void setDamageEggType; void setDamageQty; void setDamageCategory;
   const [damageReason, setDamageReason] = useState("");
 
   const cashDiff = declaredCash - trip.expectedCash;

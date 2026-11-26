@@ -3,8 +3,6 @@
 import React, { useState, useMemo } from "react";
 import { useStore } from "@/lib/store";
 import { formatINR } from "@/lib/utils";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Drawer, FormField } from "@/components/ui/drawer";

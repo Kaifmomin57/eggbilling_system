@@ -16,7 +16,6 @@ import confetti from "canvas-confetti";
 import {
   Search,
   CheckCircle2,
-  Check,
   ArrowRight,
   ArrowLeft,
   Plus,

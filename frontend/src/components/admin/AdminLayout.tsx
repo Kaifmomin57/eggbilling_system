@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { useStore } from "@/lib/store";
 import { useLanguage } from "@/lib/i18n";
 import { AdminDashboard } from "./AdminDashboard";
@@ -19,10 +19,10 @@ import {
   ShieldAlert,
   Users2,
   ArrowRight,
-  Activity,
   Layers,
 } from "lucide-react";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 type AdminTab = "dashboard" | "trips" | "customers" | "rates" | "stock" | "damage" | "workers";
 
 export function AdminLayout() {
