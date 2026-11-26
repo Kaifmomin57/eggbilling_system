@@ -150,17 +150,8 @@ export function TopNav() {
     <>
       <header className="sticky top-0 z-40 w-full border-b border-border/80 bg-white/95 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-3 sm:px-6">
-          {/* ── Left Section: Hamburger (Mobile) + Logo + Brand ── */}
+          {/* ── Left Section: Logo + Brand ── */}
           <div className="flex items-center gap-2.5 sm:gap-3">
-            {/* Mobile Hamburger Toggle Button */}
-            <button
-              onClick={() => setMobileMenuOpen(true)}
-              aria-label="Open Navigation Menu"
-              className="md:hidden flex h-10 w-10 items-center justify-center rounded-xl bg-brand-cream/80 border border-border text-brand-dark hover:bg-brand-ice/60 active:scale-95 transition-all focus:outline-none"
-            >
-              <Menu className="h-5 w-5" />
-            </button>
-
             {/* Brand Logo */}
             <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-brand-teal text-white shadow-xs shrink-0">
               <Egg className="h-6 w-6 fill-brand-mint text-white" />
@@ -174,10 +165,6 @@ export function TopNav() {
                 <span className="hidden sm:inline-block rounded-md bg-brand-ice/70 px-2 py-0.5 text-[10px] font-bold text-brand-teal uppercase tracking-wider">
                   PRO v1.0
                 </span>
-                {/* Active Role Mobile Badge */}
-                <span className="sm:hidden text-[10px] font-bold px-2 py-0.5 rounded-md bg-brand-ice/60 text-brand-teal border border-brand-teal/20">
-                  {activeRole === "ADMIN" ? "Admin" : "Worker"}
-                </span>
               </div>
               <p className="text-[11px] text-brand-muted hidden sm:block">
                 {t("tagline")}
@@ -185,7 +172,7 @@ export function TopNav() {
             </div>
           </div>
 
-          {/* ── Mobile Right Section (Uncluttered & Clean) ── */}
+          {/* ── Mobile Right Section: Live indicator + Hamburger ── */}
           <div className="flex md:hidden items-center gap-2">
             {trip.status === "OUT" && (
               <div className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-[11px] font-bold text-emerald-800">
@@ -194,24 +181,14 @@ export function TopNav() {
               </div>
             )}
 
-            {/* Quick Avatar/Menu Pill */}
-            {currentUser && (
-              <button
-                onClick={() => setMobileMenuOpen(true)}
-                className="flex items-center gap-1.5 p-1.5 pr-2.5 rounded-full bg-brand-cream border border-border active:scale-95 transition-transform"
-              >
-                <div className="h-7 w-7 rounded-full bg-brand-teal text-white flex items-center justify-center text-xs font-black">
-                  {currentUser.role === "ADMIN" ? (
-                    <ShieldCheck className="h-4 w-4" />
-                  ) : (
-                    <User className="h-4 w-4" />
-                  )}
-                </div>
-                <span className="text-xs font-bold text-brand-dark max-w-[80px] truncate">
-                  {currentUser.name.split(" ")[0]}
-                </span>
-              </button>
-            )}
+            {/* Mobile Hamburger Toggle Button */}
+            <button
+              onClick={() => setMobileMenuOpen(true)}
+              aria-label="Open Navigation Menu"
+              className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-cream/80 border border-border text-brand-dark hover:bg-brand-ice/60 active:scale-95 transition-all focus:outline-none"
+            >
+              <Menu className="h-5 w-5" />
+            </button>
           </div>
 
           {/* ── Desktop Right Section (Full Controls) ── */}
@@ -275,7 +252,7 @@ export function TopNav() {
 
       {/* ── Mobile Sliding Drawer & Backdrop ── */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-50 md:hidden flex">
+        <div className="fixed inset-0 z-50 md:hidden flex justify-end">
           {/* Dark Backdrop */}
           <div
             onClick={() => setMobileMenuOpen(false)}
@@ -283,7 +260,7 @@ export function TopNav() {
           />
 
           {/* Sliding Drawer Container */}
-          <div className="relative z-50 w-[84vw] max-w-[320px] bg-white h-full shadow-2xl flex flex-col justify-between overflow-y-auto animate-in slide-in-from-left duration-300">
+          <div className="relative z-50 w-[84vw] max-w-[320px] bg-white h-full shadow-2xl flex flex-col justify-between overflow-y-auto animate-in slide-in-from-right duration-300">
             {/* 1. Drawer Header & User Profile */}
             <div>
               {/* Header Bar */}
