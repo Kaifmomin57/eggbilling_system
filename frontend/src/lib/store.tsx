@@ -113,6 +113,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   };
 
   // Restore login session from localStorage
+  // refreshData is defined below via useCallback — intentional once-on-mount effect
   useEffect(() => {
     try {
       const savedUser = localStorage.getItem("eggbill_user");
@@ -129,6 +130,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       console.error(e);
       setIsLoading(false);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loginAsWorker = async (phone: string, pin: string) => {

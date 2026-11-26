@@ -25,7 +25,7 @@ interface WorkerHomeProps {
 }
 
 export function WorkerHome({ onStartNewBill, onViewAllBills }: WorkerHomeProps) {
-  const { trip, bills, confirmTripLoad, currentUser, activeRole, setActiveRole } = useStore();
+  const { trip, bills, confirmTripLoad, currentUser, setActiveRole } = useStore();
   const { t } = useLanguage();
 
   const isTripAssigned = Boolean(trip && trip.id);

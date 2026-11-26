@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useStore } from "@/lib/store";
-import { WorkerBottomNav, WorkerTab } from "./WorkerBottomNav";
+import { WorkerBottomNav } from "./WorkerBottomNav";
 import { WorkerHome } from "./WorkerHome";
 import { NewBillFlow } from "./NewBillFlow";
 import { WorkerBills } from "./WorkerBills";

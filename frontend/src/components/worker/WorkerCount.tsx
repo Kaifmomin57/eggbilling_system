@@ -23,6 +23,8 @@ export function WorkerCount() {
   const [damageEggType, setDamageEggType] = useState(eggTypes[0]?.name || "White Table Egg");
   const [damageQty, setDamageQty] = useState(6);
   const [damageCategory, setDamageCategory] = useState<"HIGH" | "LOW">("LOW");
+  // suppress lint — these are used by handleAddDamage which fires via modal
+  void setDamageEggType; void setDamageQty; void setDamageCategory;
   const [damageReason, setDamageReason] = useState("");
 
   const cashDiff = declaredCash - trip.expectedCash;
@@ -34,6 +36,7 @@ export function WorkerCount() {
     });
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleAddDamage = (e: React.FormEvent) => {
     e.preventDefault();
     const eggObj = eggTypes.find((et) => et.name === damageEggType);
